@@ -85,6 +85,28 @@ def classify_intent(state: GraphState):
     # The MOCK_LLM=0 extension can replace this branch with an LLM call.
     return {"intent": intent}
 
+def call_optional_llm(prompt: str, max_retries: int = 3) -> str:
+    """
+    Optional real-LLM extension point with retry-on-failure logic.
+    The default submission remains offline with MOCK_LLM=1.
+    """
+    last_error = None
+
+    for attempt in range(max_retries):
+        try:
+            # Optional extension:
+            # Replace this section with the selected real-LLM API call.
+            return (
+                "MOCK_LLM=0 is an optional extension. "
+                "The structured prompt is ready for a real LLM call."
+            )
+        except Exception as exc:
+            last_error = exc
+
+    raise RuntimeError(
+        f"Optional LLM call failed after {max_retries} attempts: {last_error}"
+    )
+
 
 def retrieve_and_answer(state: GraphState):
     query = state["query"]
@@ -105,16 +127,14 @@ def retrieve_and_answer(state: GraphState):
         answer = f"Based on the retrieved context: {snippet}"
         confidence = 1.0
     else:
-        # Optional real-LLM extension point.
-        # Keep the required offline path fully functional.
-        context = "\n\n".join(documents)
-        prompt = PROMPT_TEMPLATE.format(context=context, query=query)
-        answer = (
-            "MOCK_LLM=0 is an optional extension. "
-            "Connect your chosen free-tier LLM here and validate its JSON response "
-            f"against AskResponse. Prompt prepared: {prompt[:120]}"
-        )
-        confidence = 0.5
+          context = "\n\n".join(documents)
+          prompt = PROMPT_TEMPLATE.format(
+              context=context,
+              query=query
+    )
+
+    answer = call_optional_llm(prompt, max_retries=3)
+    confidence = 0.5
 
     return {
         "answer": answer,

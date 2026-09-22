@@ -1,22 +1,54 @@
+MODULE 2 - MODELING RESULTS
+============================
+
+CLASS BALANCE
+survived
+0    549
+1    342
+
+Class proportions:
+survived
+0    0.616162
+1    0.383838
+
 CLASSIFICATION
                      accuracy precision    recall        f1       auc      model_type
 Logistic Regression  0.804469  0.793103  0.666667  0.724409  0.843742  classification
 Decision Tree        0.765363  0.754717   0.57971  0.655738  0.797101  classification
 Random Forest        0.815642       0.8  0.695652  0.744186   0.83004  classification
 
-GRID SEARCH
-{'model__max_depth': 5, 'model__max_features': 'sqrt', 'model__n_estimators': 100}
-OOB score=0.827247191011236
+CONFUSION MATRICES
 
-IMBALANCE
+Logistic Regression:
+[[98, 12], [23, 46]]
+Decision Tree:
+[[97, 13], [29, 40]]
+Random Forest:
+[[98, 12], [21, 48]]
+
+IMBALANCE COMPARISON
              strategy  precision   recall       f1
              baseline   0.793103 0.666667 0.724409
 class_weight_balanced   0.729730 0.782609 0.755245
      SMOTE_train_only   0.739726 0.782609 0.760563
 
+RANDOM FOREST GRID SEARCH
+Best parameters: {'model__max_depth': 5, 'model__max_features': 'sqrt', 'model__n_estimators': 100}
+OOB score: 0.827247
+
+
 REGRESSION
                          MAE       RMSE        R2  Adjusted_R2
 Linear Regression  20.843508  30.681568  0.391663     0.347687
+
+HETEROSCEDASTICITY DIAGNOSTIC
+Lower predicted-fare residual SD: 11.066171
+Higher predicted-fare residual SD: 38.644116
+Conclusion: The residual spread is larger at higher predicted fare values, suggesting possible heteroscedasticity.
+
+
+FINAL CLASSIFIER INTERPRETATION
+Based on the test-set F1 criterion, the deployable classifier selected for this project is Random Forest. It achieved accuracy=0.8156, precision=0.8000, recall=0.6957, F1=0.7442, and AUC=0.8300. The Logistic Regression model achieved F1=0.7244 and AUC=0.8437, while the Decision Tree achieved F1=0.6557 and AUC=0.7971. The F1-based selection criterion was used because the target classes are imbalanced, with approximately 61.6% non-survivors and 38.4% survivors.
 
 DEPLOYED CLASSIFIER
 Random Forest

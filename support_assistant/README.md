@@ -74,7 +74,7 @@ The prompt is used as the extension point for `MOCK_LLM=0`.
 8 policy .txt files
        |
        v
-  ingestion/chunking
+ ingestion (one document = one chunk)
        |
        v
 SentenceTransformer all-MiniLM-L6-v2

@@ -1,40 +1,51 @@
-Missing percentages:
+MODULE 2 - EDA RESULTS
+======================
+
+DATASET SHAPE
+(891, 15)
+
+MISSING PERCENTAGES
 age            19.87
 embarked        0.22
 deck           77.22
 embark_town     0.22
 
-IQR outliers:
-age: 65, bounds=(2.5, 54.5)
-fare: 114, bounds=(-26.7605, 65.6563)
+MISSING-VALUE CLEANING DECISIONS
+- age: 19.87% missing -> numeric values imputed using median (28.0000).
+- embarked: 0.22% missing -> rows with missing values dropped because missingness is below 5%.
+- deck: 77.22% missing -> retained as categorical 'Missing' because missingness exceeds 30%.
+- embark_town: 0.22% missing -> rows with missing values dropped because missingness is below 5%.
 
-Fare statistics:
+Clean shape: (889, 15)
+
+IQR OUTLIERS
+age: 65 outliers, bounds=(2.5000, 54.5000)
+fare: 114 outliers, bounds=(-26.7605, 65.6563)
+
+FARE STATISTICS
 mean=32.09668087739032
 median=14.4542
 mode=8.05
-skew conclusion=right-skewed
+Skew conclusion: right-skewed because mean > median > mode.
 
-Survival by sex:
-sex
+SURVIVAL BY SEX - BOOLEAN MASKS
 female    0.740385
 male      0.188908
 
-Survival by pclass:
-pclass
+SURVIVAL BY PCLASS - BOOLEAN MASKS
 1    0.626168
 2    0.472826
 3    0.242363
 
-Survival by sex and pclass:
-sex     pclass
-female  1         0.967391
-        2         0.921053
-        3         0.500000
-male    1         0.368852
-        2         0.157407
-        3         0.135447
+SURVIVAL BY SEX AND PCLASS - BOOLEAN MASKS
+female  1    0.967391
+        2    0.921053
+        3    0.500000
+male    1    0.368852
+        2    0.157407
+        3    0.135447
 
-Correlation matrix:
+CORRELATION MATRIX
           survived    pclass       age     sibsp     parch      fare
 survived  1.000000 -0.335549 -0.069822 -0.034040  0.083151  0.255290
 pclass   -0.335549  1.000000 -0.336512  0.081656  0.016824 -0.548193
@@ -43,6 +54,25 @@ sibsp    -0.034040  0.081656 -0.232543  1.000000  0.414542  0.160887
 parch     0.083151  0.016824 -0.171485  0.414542  1.000000  0.217532
 fare      0.255290 -0.548193  0.093707  0.160887  0.217532  1.000000
 
-Two strongest correlations:
+TWO STRONGEST CORRELATIONS
 ('pclass', 'fare', np.float64(-0.5481932852366449), np.float64(0.5481932852366449))
 ('sibsp', 'parch', np.float64(0.4145416380997264), np.float64(0.4145416380997264))
+
+MULTIVARIATE INTERPRETATIONS
+
+Chart 1 - Survival by Sex and Passenger Class:
+Survival rates differ by both sex and passenger class. Within the displayed groups, female passengers have higher survival rates than male passengers, while survival also varies across passenger classes. The chart shows that sex and pclass jointly provide useful descriptive information about survival outcomes.
+
+Chart 2 - Fare Distribution by Survival:
+The fare distributions differ between passengers who survived and those who did not. The survival groups contain substantial overlap, indicating that fare alone does not separate the two outcomes completely. The boxplot also shows high-fare observations that contribute to the right-skewed fare distribution.
+
+Chart 3 - Age vs Fare by Survival:
+The scatter plot shows the relationship between passenger age and fare while distinguishing survival status. Fare values vary widely across ages, and the survival groups overlap in much of the age-fare space. This indicates that age and fare together provide descriptive patterns but do not form a simple linear separation of survival outcomes.
+
+Chart 4 - Class and Sex Survival Pattern:
+Survival varies across passenger class and sex simultaneously. The displayed class groups show different survival rates, and the difference between male and female survival is visible within the passenger classes. This supports examining sex and pclass together rather than interpreting either variable alone.
+
+Z-SCORE STANDARDIZATION
+             age_z        fare_z
+mean  2.797412e-16  1.358743e-16
+std   1.000000e+00  1.000000e+00
