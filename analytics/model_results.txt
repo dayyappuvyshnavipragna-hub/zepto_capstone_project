@@ -1,0 +1,22 @@
+CLASSIFICATION
+                     accuracy precision    recall        f1       auc      model_type
+Logistic Regression  0.804469  0.793103  0.666667  0.724409  0.843742  classification
+Decision Tree        0.765363  0.754717   0.57971  0.655738  0.797101  classification
+Random Forest        0.815642       0.8  0.695652  0.744186   0.83004  classification
+
+GRID SEARCH
+{'model__max_depth': 5, 'model__max_features': 'sqrt', 'model__n_estimators': 100}
+OOB score=0.827247191011236
+
+IMBALANCE
+             strategy  precision   recall       f1
+             baseline   0.793103 0.666667 0.724409
+class_weight_balanced   0.729730 0.782609 0.755245
+     SMOTE_train_only   0.739726 0.782609 0.760563
+
+REGRESSION
+                         MAE       RMSE        R2  Adjusted_R2
+Linear Regression  20.843508  30.681568  0.391663     0.347687
+
+DEPLOYED CLASSIFIER
+Random Forest

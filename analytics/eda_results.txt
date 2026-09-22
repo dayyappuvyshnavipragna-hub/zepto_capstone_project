@@ -1,0 +1,48 @@
+Missing percentages:
+age            19.87
+embarked        0.22
+deck           77.22
+embark_town     0.22
+
+IQR outliers:
+age: 65, bounds=(2.5, 54.5)
+fare: 114, bounds=(-26.7605, 65.6563)
+
+Fare statistics:
+mean=32.09668087739032
+median=14.4542
+mode=8.05
+skew conclusion=right-skewed
+
+Survival by sex:
+sex
+female    0.740385
+male      0.188908
+
+Survival by pclass:
+pclass
+1    0.626168
+2    0.472826
+3    0.242363
+
+Survival by sex and pclass:
+sex     pclass
+female  1         0.967391
+        2         0.921053
+        3         0.500000
+male    1         0.368852
+        2         0.157407
+        3         0.135447
+
+Correlation matrix:
+          survived    pclass       age     sibsp     parch      fare
+survived  1.000000 -0.335549 -0.069822 -0.034040  0.083151  0.255290
+pclass   -0.335549  1.000000 -0.336512  0.081656  0.016824 -0.548193
+age      -0.069822 -0.336512  1.000000 -0.232543 -0.171485  0.093707
+sibsp    -0.034040  0.081656 -0.232543  1.000000  0.414542  0.160887
+parch     0.083151  0.016824 -0.171485  0.414542  1.000000  0.217532
+fare      0.255290 -0.548193  0.093707  0.160887  0.217532  1.000000
+
+Two strongest correlations:
+('pclass', 'fare', np.float64(-0.5481932852366449), np.float64(0.5481932852366449))
+('sibsp', 'parch', np.float64(0.4145416380997264), np.float64(0.4145416380997264))
